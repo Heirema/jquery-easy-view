@@ -1,2 +1,2 @@
-jquery-font-accessibility
+jquery-easy-view
 =========================
