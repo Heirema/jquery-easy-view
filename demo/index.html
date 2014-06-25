@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Font Accessibility Demo</title>
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+	<script src="../jquery.font-accessibility.dev.js"></script>
+	<script>
+	$(function(){
+		/* Basic demo */
+		$('#font-setting-basic').easyView({
+			container: '#basic'
+		});
+
+		/* Custom buttons */
+		$('#font-setting-buttons').easyView({
+			container: '#buttons',
+			increaseSelector: '.increase-me',
+			decreaseSelector: '.decrease-me',
+			normalSelector: '.reset-me',
+			contrastSelector: '.change-me'
+		});
+
+	});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="page-header">EasyView - jQuery Font Accessibility</h1>
+		<p>A small plugin to help resizing fonts, and change contrast for better viewing content.</p>
+		<h3>Basic Usage</h3>
+		<p>Using this plugin without any customization</p>
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="glyphicon glyphicon-wrench"></i> Code - Javascript</div>
+			<div class="panel-body">
+<pre>
+$(function(){
+	$('#font-setting').easyView();
+});
+</pre>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="glyphicon glyphicon-wrench"></i> Code - #font-setting div</div>
+			<div class="panel-body">
+<pre>
+&lt;div id="font-setting"&gt;&lt;/div&gt;
+</pre>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="glyphicon glyphicon-ok"></i> Using</div>
+			<div class="panel-body">
+				<div id="font-setting-basic"></div>
+				<div id="basic">
+					<h1>Text in H1</h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h2>Text in H2</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h3>Text in H3</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h4>Text in H4</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h5>Text in H5</h5>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h3>Unsorted list</h3>
+					<ul>
+						<li>Line 1</li>
+						<li>Line 2</li>
+						<li>Line 3</li>
+					</ul>
+					<h3>Ordered list</h3>
+					<ol>
+						<li>Line 1</li>
+						<li>Line 2</li>
+						<li>Line 3</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		
+		<hr />
+		<h3>Custom buttons</h3>
+		<p>Using custom buttons</p>
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="glyphicon glyphicon-wrench"></i> Code - Javascript</div>
+			<div class="panel-body">
+<pre>
+$(function(){
+	$('#font-setting-buttons').easyView({
+		increaseSelector: '.increase-me',
+		decreaseSelector: '.decrease-me',
+		normalSelector: '.reset-me',
+		contrastSelector: '.change-me'
+	});
+});
+</pre>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="glyphicon glyphicon-wrench"></i> Code - #font-setting div</div>
+			<div class="panel-body">
+<pre>
+&lt;div id=&quot;font-setting&quot;&gt;
+	&lt;div class=&quot;btn-group&quot;&gt;
+		&lt;button type=&quot;button&quot; class=&quot;btn btn-default decrease-me&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-minus&quot;&gt;&lt;/i&gt; Decrease&lt;/button&gt;
+		&lt;button type=&quot;button&quot; class=&quot;btn btn-default reset-me&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-font&quot;&gt;&lt;/i&gt; Normal&lt;/button&gt;
+		&lt;button type=&quot;button&quot; class=&quot;btn btn-default increase-me&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-plus&quot;&gt;&lt;/i&gt; Increase&lt;/button&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;btn-group&quot;&gt;
+		&lt;button type=&quot;button&quot; class=&quot;btn btn-default change-me&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-adjust&quot;&gt;&lt;/i&gt; Contrast&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="glyphicon glyphicon-ok"></i> Using</div>
+			<div class="panel-body">
+				<div id="font-setting-buttons">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default decrease-me"><i class="glyphicon glyphicon-minus"></i> Decrease</button>
+						<button type="button" class="btn btn-default reset-me"><i class="glyphicon glyphicon-font"></i> Normal</button>
+						<button type="button" class="btn btn-default increase-me"><i class="glyphicon glyphicon-plus"></i> Increase</button>
+					</div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default change-me"><i class="glyphicon glyphicon-adjust"></i> Contrast</button>
+					</div>
+				</div>
+				<div id="buttons">
+					<h1>Text in H1</h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h2>Text in H2</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h3>Text in H3</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h4>Text in H4</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h5>Text in H5</h5>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat lacus magna, eleifend convallis sem vulputate vitae. Mauris vel nisi a mauris tempus venenatis. Aliquam semper metus mi, id imperdiet velit molestie a. In hac habitasse platea dictumst. Suspendisse quis ligula interdum, ultricies nibh non, fringilla tortor. Nunc vitae gravida sapien. Aenean vel mollis neque.</p>
+					<h3>Unsorted list</h3>
+					<ul>
+						<li>Line 1</li>
+						<li>Line 2</li>
+						<li>Line 3</li>
+					</ul>
+					<h3>Ordered list</h3>
+					<ol>
+						<li>Line 1</li>
+						<li>Line 2</li>
+						<li>Line 3</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		
+		<hr />
+		<h3>Custom Wrapper</h3>
+
+		<hr />
+	</div>
+</body>
+</html>
