@@ -26,11 +26,9 @@
 				options: {},
 				affectedTags: new Array(),
 				mergeOptions: function(option){
-					console.log('Merging options');
 					$.extend(this.options, this.defaults, option)
 				},
 				storeDefaults: function(){
-					console.log('Storing default values');
 					/* Store default values for each elements */
 					$(this.affectedTags.join(',')).each(function(){
 						var current_tag = $(this);
@@ -55,14 +53,12 @@
 					$(this.options.container).data('originalColor', $(this.options.container).css('color'));
 				},
 				createDefaultMarkup: function(){
-					console.log('Creating default html markup');
 					/* Create a default markup */
 					if(selector.html() == ''){
 						selector.html(this.options.defaultMarkup);
 					}
 				},
 				setActions: function(){
-					console.log('Setting actions to links/buttons');
 					var self = this;
 
 					/* Decrease font size */
@@ -90,39 +86,29 @@
 					});
 				},
 				fetchTags: function(){
-					console.log('Fetching all tags');
 					/* Fetching all tags to work */
 					var affectedTags = this.affectedTags;
 					var options = this.options;
 					$.each(this.options.tags, function(i, v){
 						affectedTags.push(options.container+" "+v);
 					});
-
-					console.log(affectedTags);
 				},
 				decreaseFont: function(){
-					console.log('Decrease font size');
-
 					if((this.currentRatio - this.options.step) >= 10){
 						this.currentRatio = this.currentRatio - this.options.step;
 					}
 					this.changeFontSize();
 				},
 				resetFont: function(){
-					console.log('Reset font size');
-
 					/* Set default ratio */
 					this.currentRatio = 100;
 					this.changeFontSize();
 				},
 				increaseFont: function(){
-					console.log('Increase font size');
-
 					this.currentRatio = this.currentRatio + this.options.step;
 					this.changeFontSize();
 				},
 				changeFontSize: function(ratio){
-					console.log('Applying new font size ratio');
 					if(typeof ratio != 'undefined' && parseInt(ratio) > 10){
 						this.currentRatio = ratio;
 					}
@@ -135,8 +121,6 @@
 					});
 				},
 				changeContrast: function(){
-					console.log('Change content contrast');
-
 					$(this.affectedTags).each(function(){
 						var current_tag = $(this);
 						current_tag.css('background-color', (!this.normalContrast) ? current_tag.data('originalBackground') : '#000');
@@ -149,19 +133,46 @@
 					this.normalContrast = !this.normalContrast;
 				},
 				startPlugin: function(option){
-					console.log('Starting plugin');
-
 					this.mergeOptions(option);
 					this.fetchTags();
 					this.storeDefaults();
 					this.createDefaultMarkup();
 					this.setActions();
+				},
+				executeFunction: function(function_name, value){
+					switch(function_name){
+						case 'decrease':
+								this.decreaseFont();
+							break;
+						case 'reset':
+								this.resetFont();
+							break;
+						case 'increase':
+								this.increaseFont();
+							break;
+						case 'contrast':
+								if(typeof value != 'undefined'){
+									/* Change to specified value - true or false */
+									if(value){
+										/* Setting true, contrast will be applied */
+										this.normalContrast = true;
+									} else {
+										/* Setting false, will remove contrast */
+										this.normalContrast = false;
+									}
+								}
 
-					console.log('Plugin started');
+								this.changeContrast();
+							break;
+						case 'setRatio':
+								this.changeFontSize(ratio);
+							break;
+						default:
+								alert("Called function does not exist!");
+							break;
+					}
 				},
 				destroy: function(){
-					console.log('Destroying plugin');
-
 					/* Back all fonts to default size */
 					this.resetFont();
 
@@ -171,8 +182,6 @@
 
 					/* Remove plugin data */
 					selector.removeData('easyView');
-
-					console.log('Plugin destroyed');
 				}
 			};
 
@@ -180,11 +189,19 @@
 
 			/* Store plugin instance */
 			selector.data('easyView', plugin);
-
-		} else {
+		} else { 
 			/* Plugin is already initialized, execute existing function */
-			
-
+			var plugin = selector.data('easyView');
+			if(typeof option == 'object'){
+				/* Restart plugin */
+				plugin.destroy();
+				plugin.startPlugin(option);
+			} else if(typeof option == 'string') {
+				/* Execute specific function */
+				plugin.executeFunction(option, value);
+			} else {
+				alert("Invalid params to start");
+			}
 		}
 	}
 }(jQuery));
