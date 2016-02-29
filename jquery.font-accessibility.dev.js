@@ -30,22 +30,24 @@
 				},
 				storeDefaults: function(){
 					/* Store default values for each elements */
-					$(this.affectedTags.join(',')).each(function(){
-						var current_tag = $(this);
-						var font_size = current_tag.css('font-size');
+					$.each(this.affectedTags, function(elIndex, elValue){
+						$(elValue).each(function(){
+							var current_tag = $(this);
+							var font_size = current_tag.css('font-size');
 
-						if(font_size.indexOf('%') > -1){
-							/* Percentage */
-							current_tag.data('originalSize', parseInt(font_size.replace('%','')));
-							current_tag.data('originalUnit', '%');
-						} else {
-							/* Other units */
-							current_tag.data('originalSize', parseInt(font_size.replace(font_size.substr(-2),'')));
-							current_tag.data('originalUnit', font_size.substr(-2));
-						}
+							if(font_size.indexOf('%') > -1){
+								/* Percentage */
+								current_tag.data('originalSize', parseInt(font_size.replace('%','')));
+								current_tag.data('originalUnit', '%');
+							} else {
+								/* Other units */
+								current_tag.data('originalSize', parseInt(font_size.replace(font_size.substr(-2),'')));
+								current_tag.data('originalUnit', font_size.substr(-2));
+							}
 
-						current_tag.data('originalBackground', current_tag.css('background-color'));
-						current_tag.data('originalColor', current_tag.css('color'));
+							current_tag.data('originalBackground', current_tag.css('background-color'));
+							current_tag.data('originalColor', current_tag.css('color'));
+						});
 					});
 
 					/* Container default values */
@@ -115,20 +117,31 @@
 
 					var current_ratio = this.currentRatio;
 
-					$(this.affectedTags.join(',')).each(function(){
-						var current_tag = $(this);
-						current_tag.css('font-size', (current_tag.data('originalSize')*(current_ratio/100))+current_tag.data('originalUnit'));
+					$.each(this.affectedTags, function(elIndex, elValue){
+						$(elValue).each(function(){
+							var current_tag = $(this);
+							current_tag.css('font-size', (current_tag.data('originalSize')*(current_ratio/100))+current_tag.data('originalUnit'));
+						});
 					});
 				},
 				changeContrast: function(){
-					$(this.affectedTags).each(function(){
-						var current_tag = $(this);
-						current_tag.css('background-color', (!this.normalContrast) ? current_tag.data('originalBackground') : '#000');
-						current_tag.css('color', (!this.normalContrast) ? current_tag.data('originalColor') : '#fff');
+					var isNormalContrast = this.normalContrast;
+					$.each(this.affectedTags, function(elIndex, elValue){
+						$(elValue).each(function(){
+							var current_tag = $(this);
+
+							if(!isNormalContrast){
+								current_tag.css('background-color', '');
+								current_tag.css('color', '');
+							} else {
+								current_tag.css('background-color', '#000');
+								current_tag.css('color', '#fff');
+							}
+						});
 					});
 
-					$(this.options.container).css('background-color', (!this.normalContrast) ? $(this.options.container).data('originalBackground') : '#000');
-					$(this.options.container).css('color', (!this.normalContrast) ? $(this.options.container).data('originalColor') : '#fff');
+					$(this.options.container).css('background-color', (!isNormalContrast) ? $(this.options.container).data('originalBackground') : '#000');
+					$(this.options.container).css('color', (!isNormalContrast) ? $(this.options.container).data('originalColor') : '#fff');
 
 					this.normalContrast = !this.normalContrast;
 				},
