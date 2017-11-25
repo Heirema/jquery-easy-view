@@ -125,25 +125,18 @@
 					});
 				},
 				changeContrast: function(){
-					var isNormalContrast = this.normalContrast;
-					$.each(this.affectedTags, function(elIndex, elValue){
-						$(elValue).each(function(){
-							var current_tag = $(this);
-
-							if(!isNormalContrast){
-								current_tag.css('background-color', '');
-								current_tag.css('color', '');
-							} else {
-								current_tag.css('background-color', '#000');
-								current_tag.css('color', '#fff');
-							}
-						});
+    				    
+				    const normalContrast = this.normalContrast;
+					$(this.affectedTags.join(',')).each(function(){
+						const current_tag = $(this);
+						
+						normalContrast ? current_tag.css('color', '#fff') : current_tag.css('color', current_tag.data('originalColor'));
 					});
-
-					$(this.options.container).css('background-color', (!isNormalContrast) ? $(this.options.container).data('originalBackground') : '#000');
-					$(this.options.container).css('color', (!isNormalContrast) ? $(this.options.container).data('originalColor') : '#fff');
-
-					this.normalContrast = !this.normalContrast;
+					
+					$(this.options.container).css('color', this.normalContrast ? '#fff' : $(this.options.container).data('originalColor'));
+					$(this.options.container).css('background-color', this.normalContrast ? '#000' : $(this.options.container).data('originalBackground'));
+                    
+                    this.normalContrast = !this.normalContrast;
 				},
 				startPlugin: function(option){
 					this.mergeOptions(option);
