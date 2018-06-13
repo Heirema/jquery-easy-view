@@ -148,7 +148,7 @@
 					}
 
 					if(typeof(Storage) !== "undefined"){
-						window.localStorage.setItem('easy-view-config', this.getCurrentConfig());
+						window.localStorage.setItem(this.selector.selector, this.getCurrentConfig());
 					} else {
 						console.log('Web Storage not available!');
 					}
@@ -156,7 +156,7 @@
 				getCurrentConfig: function(){
 					var config = {
 						ratio: this.currentRatio,
-						normalContrast: this.normalContrast
+						normalContrast: !this.normalContrast
 					};
 
 					return JSON.stringify(config);
@@ -166,7 +166,7 @@
 						return;
 					}
 
-					var storagedOption = window.localStorage.getItem('easy-view-config');
+					var storagedOption = window.localStorage.getItem(this.selector.selector);
 
 					if(storagedOption){
 						storagedOption = JSON.parse(storagedOption);
