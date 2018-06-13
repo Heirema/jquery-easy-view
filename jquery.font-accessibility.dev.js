@@ -21,12 +21,13 @@
 					increaseSelector: '.increase-text',
 					decreaseSelector: '.decrease-text',
 					normalSelector: '.reset-text',
-					contrastSelector: '.contrast-text'
+					contrastSelector: '.contrast-text',
+					persist: false
 				},
 				options: {},
 				affectedTags: new Array(),
 				mergeOptions: function(option){
-					$.extend(this.options, this.defaults, option)
+					$.extend(this.options, this.defaults, option);
 				},
 				storeDefaults: function(){
 					/* Store default values for each elements */
@@ -123,12 +124,13 @@
 							current_tag.css('font-size', (current_tag.data('originalSize')*(current_ratio/100))+current_tag.data('originalUnit'));
 						});
 					});
+
+					this.persistConfig();
 				},
 				changeContrast: function(){
-    				    
-				    const normalContrast = this.normalContrast;
+				    var normalContrast = this.normalContrast;
 					$(this.affectedTags.join(',')).each(function(){
-						const current_tag = $(this);
+						var current_tag = $(this);
 						
 						normalContrast ? current_tag.css('color', '#fff') : current_tag.css('color', current_tag.data('originalColor'));
 					});
@@ -136,7 +138,45 @@
 					$(this.options.container).css('color', this.normalContrast ? '#fff' : $(this.options.container).data('originalColor'));
 					$(this.options.container).css('background-color', this.normalContrast ? '#000' : $(this.options.container).data('originalBackground'));
                     
-                    this.normalContrast = !this.normalContrast;
+					this.normalContrast = !this.normalContrast;
+					
+					this.persistConfig();
+				},
+				persistConfig: function(){
+					if(!this.options.persist){
+						return;
+					}
+
+					if(typeof(Storage) !== "undefined"){
+						window.localStorage.setItem('easy-view-config', this.getCurrentConfig());
+					} else {
+						console.log('Web Storage not available!');
+					}
+				},
+				getCurrentConfig: function(){
+					var config = {
+						ratio: this.currentRatio,
+						normalContrast: this.normalContrast
+					};
+
+					return JSON.stringify(config);
+				},
+				restoreFromStorage: function(){
+					if(!this.options.persist){
+						return;
+					}
+
+					var storagedOption = window.localStorage.getItem('easy-view-config');
+
+					if(storagedOption){
+						storagedOption = JSON.parse(storagedOption);
+
+						this.currentRatio = storagedOption.ratio;
+						this.normalContrast = storagedOption.normalContrast;
+
+						this.changeFontSize();
+						this.changeContrast();
+					}
 				},
 				startPlugin: function(option){
 					this.mergeOptions(option);
@@ -144,6 +184,7 @@
 					this.storeDefaults();
 					this.createDefaultMarkup();
 					this.setActions();
+					this.restoreFromStorage();
 				},
 				executeFunction: function(function_name, value){
 					switch(function_name){
